@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ImageSourcePropType} from 'react-native';
+import {View, Text, Image, StyleSheet, ImageSourcePropType, TouchableOpacity} from 'react-native';
 import {spacing, typography} from '../utils/typography';
 import {useTheme} from '../context/ThemeContext';
 import Arrow from '../assets/icons/Arrow';
@@ -14,7 +14,7 @@ interface Props {
 const ProfileItem = ({image, title, subTitle, userBadge}: Props) => {
   const {theme, toggleTheme} = useTheme();
   return (
-    <View
+    <TouchableOpacity
       style={[styles.container, {borderColor: theme.colors.buttonBackground}]}>
       <View style={styles.leftContainer}>
         <Image source={image} style={styles.userImage} />
@@ -41,7 +41,7 @@ const ProfileItem = ({image, title, subTitle, userBadge}: Props) => {
       <View>
         <Arrow color={theme.colors.textPrimary} />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

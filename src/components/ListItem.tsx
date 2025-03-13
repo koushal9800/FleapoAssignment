@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ImageSourcePropType} from 'react-native';
+import {View, Text, Image, StyleSheet, ImageSourcePropType, TouchableOpacity} from 'react-native';
 import {spacing, typography} from '../utils/typography';
 import {useTheme} from '../context/ThemeContext';
 import FollowIcon from '../assets/icons/FollowIcon';
@@ -24,7 +24,7 @@ const ListItem = ({
 }: Props) => {
   const {theme, toggleTheme} = useTheme();
   return (
-    <View
+    <TouchableOpacity
       style={[styles.container, {borderColor: theme.colors.buttonBackground}]}>
       <View style={styles.leftContainer}>
         <Image source={image} style={styles.imageStyle} />
@@ -79,7 +79,7 @@ const ListItem = ({
       <View style={{flex: 3, alignItems: 'flex-end'}}>
         <Arrow color={theme.colors.textPrimary} />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

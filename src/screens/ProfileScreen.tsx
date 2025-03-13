@@ -7,6 +7,7 @@ import {
   ScrollView,
   ImageSourcePropType,
   ImageBackground,
+  TouchableOpacity,
 } from 'react-native';
 import TopeightItem from '../components/TopeightItem';
 import RecentActivity from '../components/RecentActivity';
@@ -252,7 +253,7 @@ const ProfileScreen = () => {
 
         {/* Follow Button */}
 
-        <View
+        <TouchableOpacity
           style={[
             styles.followButton,
             {backgroundColor: theme.colors.buttonBackground},
@@ -262,7 +263,7 @@ const ProfileScreen = () => {
             style={[styles.followTextStyle, {color: theme.colors.textPrimary}]}>
             Follow
           </Text>
-        </View>
+        </TouchableOpacity>
 
         {/* Separator */}
 
