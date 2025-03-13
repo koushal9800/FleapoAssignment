@@ -23,6 +23,11 @@ export const typography= {
         fontSize: 14,
         fontFamily: 'AvenirNextLTPro-Regular',
         fontWeight: '500' as const,
+      },
+      favText: {
+        fontSize: 14,
+        fontFamily: 'AvenirNextLTPro-Medium',
+        fontWeight: '600' as const,
       }
 }
 export const spacing =  {

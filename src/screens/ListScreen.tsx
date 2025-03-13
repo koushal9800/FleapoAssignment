@@ -1,23 +1,28 @@
-import React from "react";
-import { View,Text, StyleSheet } from "react-native";
-import { typography } from "../utils/typography";
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {typography} from '../utils/typography';
+import {useTheme} from '../context/ThemeContext';
 
-const ListScreen = () =>{
-    return(
-        <View style={styles.container} >
-            <Text style={{...typography.sectionTitle, color:'#fff'}} >ListScreen</Text>
-        </View>
-    )
-}
+const ListScreen = () => {
+  const {theme, toggleTheme} = useTheme();
+  return (
+    <View
+      style={[styles.container, {backgroundColor: theme.colors.background}]}>
+      <Text
+        style={{...typography.sectionTitle, color: theme.colors.textPrimary}}>
+        ListScreen
+      </Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#1C1C1E',
-      justifyContent:'center',
-      alignItems:'center',
+  container: {
+    flex: 1,
 
-    },
-})
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
-export default ListScreen
+export default ListScreen;

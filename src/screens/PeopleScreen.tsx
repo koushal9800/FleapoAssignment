@@ -6,15 +6,13 @@ import {
   TouchableOpacity,
   ImageSourcePropType,
   FlatList,
-  Image,
   TextInput,
   KeyboardAvoidingView,
-  Platform,
-  ScrollView,
 } from 'react-native';
 import ProfileItem from '../components/ProfileItem';
-import { typography } from '../utils/typography';
-import { colors } from '../utils/color';
+import {typography} from '../utils/typography';
+import {useTheme} from '../context/ThemeContext';
+import Search from '../assets/icons/Search';
 
 const tabs = ['Friends', 'Verified', 'Everyone'];
 
@@ -55,60 +53,89 @@ const userData: userProps[] = [
 ];
 
 const PeopleScreen = () => {
+  const {theme, toggleTheme} = useTheme();
   const [selectedTab, setSelectedTab] = useState('Friends');
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} >
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={{flexGrow:1}} >
-      <Text style={styles.userNameStyle}>People</Text>
+    <KeyboardAvoidingView style={styles.container} behavior="height">
+      <View
+        style={[styles.container, {backgroundColor: theme.colors.background}]}>
+        <Text
+          style={[
+            styles.userNameStyle,
+            {
+              color: theme.colors.textPrimary,
+              textShadowColor: theme.colors.textPrimary,
+            },
+          ]}>
+          People
+        </Text>
 
-      <View style={styles.tabs}>
-        {tabs.map(tab => (
-          <TouchableOpacity
-            key={tab}
-            style={[styles.tab, selectedTab === tab && styles.activeTab]}
-            onPress={() => setSelectedTab(tab)}>
-            <Text
+        <View
+          style={[
+            styles.tabs,
+            {
+              backgroundColor: theme.colors.buttonBackground,
+              borderColor: theme.colors.borderColor,
+            },
+          ]}>
+          {tabs.map(tab => (
+            <TouchableOpacity
+              key={tab}
               style={[
-                styles.tabText,
-                selectedTab === tab && styles.activeTabText,
-              ]}>
-              {tab}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+                styles.tab,
+                selectedTab === tab && {
+                  backgroundColor: theme.colors.textPrimary,
+                },
+              ]}
+              onPress={() => setSelectedTab(tab)}>
+              <Text
+                style={[
+                  styles.tabText,
+                  {
+                    color:
+                      selectedTab === tab
+                        ? theme.colors.background
+                        : theme.colors.textPrimary,
+                  },
+                ]}>
+                {tab}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
 
-      <View
-        style={styles.separator}
-      />
+        <View
+          style={[
+            styles.separator,
+            {backgroundColor: theme.colors.buttonBackground},
+          ]}
+        />
 
-      <FlatList
-        data={userData}
-        renderItem={({item, index}) => (
-          <ProfileItem
-            image={item.image}
-            title={item.title}
-            subTitle={item.subTitle}
-            userBadge={item.userBadge}
+        <FlatList
+          data={userData}
+          renderItem={({item, index}) => (
+            <ProfileItem
+              image={item.image}
+              title={item.title}
+              subTitle={item.subTitle}
+              userBadge={item.userBadge}
+            />
+          )}
+        />
+
+        <View
+          style={[
+            styles.searchContainer,
+            {backgroundColor: theme.colors.buttonBackground},
+          ]}>
+          <Search color={theme.colors.textPrimary} />
+          <TextInput
+            placeholder="Search People"
+            placeholderTextColor={theme.colors.textPrimary}
+            style={{color: theme.colors.textPrimary, marginLeft: 16}}
           />
-        )}
-      />
-
-      <View
-        style={styles.searchContainer}>
-        <Image
-          source={require('../assets/icons/search.png')}
-          style={styles.searchInput}
-        />
-        <TextInput
-          placeholder="Search People"
-          placeholderTextColor={colors.textPrimary}
-          style={{color: colors.textPrimary}}
-        />
+        </View>
       </View>
-      </ScrollView>
-    </View>
     </KeyboardAvoidingView>
   );
 };
@@ -116,12 +143,9 @@ const PeopleScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   userNameStyle: {
     ...typography.title,
-    color: colors.textPrimary,
-    textShadowColor: 'rgba(0, 0, 0, 1)',
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 4,
     elevation: 70,
@@ -131,7 +155,6 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: colors.buttonBackground,
     borderRadius: 100,
     marginTop: 16,
     borderBottomWidth: 2,
@@ -140,17 +163,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   tab: {padding: 10, borderRadius: 100, paddingHorizontal: 24},
-  activeTab: {backgroundColor: colors.textPrimary},
   tabText: {
-    color: colors.textPrimary,
-    ...typography.buttonText
+    ...typography.buttonText,
   },
   activeTabText: {
-    color: colors.background,
-    ...typography.buttonText
+    ...typography.buttonText,
   },
-  searchContainer:{
-    backgroundColor: colors.buttonBackground,
+  searchContainer: {
     paddingHorizontal: 16,
     width: '90%',
     alignSelf: 'center',
@@ -159,13 +178,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  searchInput:{width: 15, height: 15, marginRight: 16},
-  separator:{
+
+  separator: {
     width: '100%',
-    backgroundColor: colors.separator,
     height: 2,
     marginVertical: 16,
-  }
+  },
 });
 
 export default PeopleScreen;

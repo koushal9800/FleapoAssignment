@@ -1,65 +1,83 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, ImageSourcePropType} from 'react-native';
-import { spacing, typography } from '../utils/typography';
-import { colors } from '../utils/color';
+import {spacing, typography} from '../utils/typography';
+import {useTheme} from '../context/ThemeContext';
+import FollowIcon from '../assets/icons/FollowIcon';
+import Arrow from '../assets/icons/Arrow';
 
 interface Props {
-image:ImageSourcePropType;
-title: string;
-subTitle: string;
-restaurants: string;
-position?: string;
-like: string
+  image: ImageSourcePropType;
+  title: string;
+  subTitle: string;
+  restaurants: string;
+  position?: string;
+  like: string;
 }
 
-const ListItem = ({image,title,subTitle,restaurants,position,like}:Props) => {
+const ListItem = ({
+  image,
+  title,
+  subTitle,
+  restaurants,
+  position,
+  like,
+}: Props) => {
+  const {theme, toggleTheme} = useTheme();
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, {borderColor: theme.colors.buttonBackground}]}>
       <View style={styles.leftContainer}>
-        <Image
-          source={image}
-          style={styles.imageStyle}
-        />
+        <Image source={image} style={styles.imageStyle} />
         <View style={styles.textContainer}>
-          <Text style={styles.titleStyle}>{title}</Text>
+          <Text style={[styles.titleStyle, {color: theme.colors.textPrimary}]}>
+            {title}
+          </Text>
           <Text
             style={{
               ...typography.subText,
-              color: colors.textSecondary,
+              color: theme.colors.textSecondary,
               marginTop: spacing.m,
             }}>
             {subTitle}
           </Text>
 
-          <View
-            style={styles.subtextContainer}>
-            <Text style={[styles.subTitleStyle, {color: colors.textSecondary}]}>
+          <View style={styles.subtextContainer}>
+            <Text
+              style={[
+                styles.subTitleStyle,
+                {color: theme.colors.textSecondary},
+              ]}>
               {restaurants} restaurants
             </Text>
             <Text
-              style={[styles.subTitleStyle, {color: colors.textNearby, marginLeft: 6}]}>
+              style={[
+                styles.subTitleStyle,
+                {color: theme.colors.textNearby, marginLeft: 6},
+              ]}>
               {position}
             </Text>
 
-            <View style={styles.radio} />
-
-            <Image
-              source={require('../assets/images/followIcon.png')}
-              style={styles.followIcon}
-              resizeMode="contain"
+            <View
+              style={[
+                styles.radio,
+                {backgroundColor: theme.colors.textSecondary},
+              ]}
             />
-            <Text style={[styles.subTitleStyle, {color: colors.textSecondary}]}>
-             {like}
+
+            <FollowIcon color={theme.colors.textSecondary} />
+            <Text
+              style={[
+                styles.subTitleStyle,
+                {color: theme.colors.textSecondary},
+              ]}>
+              {like}
             </Text>
           </View>
         </View>
       </View>
 
-      <View style={{flex: 3, alignItems:'flex-end'}}>
-        <Image
-          source={require('../assets/icons/rightArrow.png')}
-          style={styles.rightIcon}
-        />
+      <View style={{flex: 3, alignItems: 'flex-end'}}>
+        <Arrow color={theme.colors.textPrimary} />
       </View>
     </View>
   );
@@ -70,7 +88,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     paddingVertical: spacing.xl,
-    borderColor: colors.separator,
+
     alignItems: 'center',
     justifyContent: 'space-between',
   },
@@ -79,21 +97,25 @@ const styles = StyleSheet.create({
   textContainer: {marginLeft: spacing.xl},
   titleStyle: {
     ...typography.buttonText,
-    color: colors.textPrimary,
   },
   subTitleStyle: {
     ...typography.subText,
+    marginLeft: spacing.m,
   },
   radio: {
     width: 4,
     height: 4,
-    backgroundColor: colors.textSecondary,
+
     borderRadius: 2,
     marginHorizontal: spacing.m,
   },
-  rightIcon:{width: 5, height: 8},
-  subtextContainer:{flexDirection: 'row', marginTop: spacing.xl, alignItems: 'center'},
-  followIcon:{width: 16, height: 16, marginRight: spacing.xl}
+  rightIcon: {width: 5, height: 8},
+  subtextContainer: {
+    flexDirection: 'row',
+    marginTop: spacing.xl,
+    alignItems: 'center',
+  },
+  followIcon: {width: 16, height: 16, marginRight: spacing.xl},
 });
 
 export default ListItem;

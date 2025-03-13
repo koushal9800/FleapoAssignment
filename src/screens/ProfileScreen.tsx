@@ -13,10 +13,10 @@ import RecentActivity from '../components/RecentActivity';
 import Button from '../components/Button';
 import ListItem from '../components/ListItem';
 import UserItem from '../components/UserItem';
-import { colors } from '../utils/color';
 import LinearGradient from 'react-native-linear-gradient';
-import { spacing, typography } from '../utils/typography';
-
+import {spacing, typography} from '../utils/typography';
+import {useTheme} from '../context/ThemeContext';
+import FollowIcon from '../assets/icons/FollowIcon';
 
 interface topeightProps {
   id: number;
@@ -172,9 +172,15 @@ const userData: userProps[] = [
 ];
 
 const ProfileScreen = () => {
+  const {theme, toggleTheme} = useTheme();
+
   const renderRow = (topEightData: topeightProps[]) => (
     <View
-      style={{flexDirection: 'column', alignItems: 'center', paddingRight: spacing.xll}}>
+      style={{
+        flexDirection: 'column',
+        alignItems: 'center',
+        paddingRight: spacing.xll,
+      }}>
       {topEightData.map((item, index) => (
         <TopeightItem
           key={item.id}
@@ -197,29 +203,44 @@ const ProfileScreen = () => {
     return rows;
   };
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, {backgroundColor: theme.colors.background}]}>
       <ScrollView>
         <ImageBackground
           source={require('../assets/images/userLocationBack.png')}
-          style={styles.bannerImage}
-        >
-          <LinearGradient colors={['rgba(28, 28, 31,0.1)','rgba(28, 28, 31,1)', ]} style={styles.bannerImageGradient} />
+          style={styles.bannerImage}>
+          <LinearGradient
+            colors={['rgba(28, 28, 31,0.1)', 'rgba(28, 28, 31,1)']}
+            style={styles.bannerImageGradient}
+          />
         </ImageBackground>
 
         {/* USER PROFILE SECTION */}
         <View style={styles.profileContainer}>
           <View>
             <View style={styles.badgeContainer}>
-              <Text style={styles.badgeText}>kumargauravof</Text>
+              <Text
+                style={[styles.badgeText, {color: theme.colors.textPrimary}]}>
+                kumargauravof
+              </Text>
               <Image
                 source={require('../assets/images/UserBadge.png')}
                 style={styles.badgeStyle}
               />
             </View>
 
-            <Text style={styles.userNameStyle}>KUMAR GAURAV</Text>
+            <Text
+              style={[styles.userNameStyle, {color: theme.colors.textPrimary}]}>
+              KUMAR GAURAV
+            </Text>
 
-            <Text style={styles.placeNameStyle}>Los Angeles, CA</Text>
+            <Text
+              style={[
+                styles.placeNameStyle,
+                {color: theme.colors.textSecondary},
+              ]}>
+              Los Angeles, CA
+            </Text>
           </View>
 
           <Image
@@ -231,25 +252,34 @@ const ProfileScreen = () => {
 
         {/* Follow Button */}
 
-        <View style={styles.followButton}>
-          <Image
-            source={require('../assets/images/followIcon.png')}
-            style={{width: 16, height: 16}}
-            resizeMode="contain"
-          />
-          <Text style={styles.followTextStyle}>Follow</Text>
+        <View
+          style={[
+            styles.followButton,
+            {backgroundColor: theme.colors.buttonBackground},
+          ]}>
+          <FollowIcon color={theme.colors.textPrimary} />
+          <Text
+            style={[styles.followTextStyle, {color: theme.colors.textPrimary}]}>
+            Follow
+          </Text>
         </View>
 
         {/* Separator */}
 
         <View
-          style={styles.separator}
+          style={[
+            styles.separator,
+            {backgroundColor: theme.colors.buttonBackground},
+          ]}
         />
 
         {/* TOP EIGHT */}
 
         <View style={{marginLeft: spacing.xll}}>
-          <Text style={styles.topEightTitle}>Gaurav’s Top 8</Text>
+          <Text
+            style={[styles.topEightTitle, {color: theme.colors.textPrimary}]}>
+            Gaurav’s Top 8
+          </Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={{flexDirection: 'row'}}>{renderRows()}</View>
           </ScrollView>
@@ -258,13 +288,19 @@ const ProfileScreen = () => {
         {/* Separator */}
 
         <View
-          style={styles.separator}
+          style={[
+            styles.separator,
+            {backgroundColor: theme.colors.buttonBackground},
+          ]}
         />
 
         {/* Recent Activity */}
         <View style={{marginHorizontal: spacing.xll}}>
-          <Text style={styles.topEightTitle}>Recent Activity</Text>
-          <View style={{marginTop: spacing.xl, marginBottom:spacing.xll}}>
+          <Text
+            style={[styles.topEightTitle, {color: theme.colors.textPrimary}]}>
+            Recent Activity
+          </Text>
+          <View style={{marginTop: spacing.xl, marginBottom: spacing.xll}}>
             {recentActivityData.map((item, index) => (
               <RecentActivity
                 key={item.id}
@@ -291,14 +327,20 @@ const ProfileScreen = () => {
           {/* Separator */}
 
           <View
-            style={styles.separator}
+            style={[
+              styles.separator,
+              {backgroundColor: theme.colors.buttonBackground},
+            ]}
           />
 
           {/* LISTS */}
           <View>
-            <Text style={styles.topEightTitle}>Lists</Text>
+            <Text
+              style={[styles.topEightTitle, {color: theme.colors.textPrimary}]}>
+              Lists
+            </Text>
 
-            <View style={{marginTop: spacing.xl, marginBottom:spacing.xll}}>
+            <View style={{marginTop: spacing.xl, marginBottom: spacing.xll}}>
               {listData.map((item, index) => (
                 <ListItem
                   key={item.id}
@@ -318,7 +360,10 @@ const ProfileScreen = () => {
           <Button />
 
           <View
-            style={styles.separator}
+            style={[
+              styles.separator,
+              {backgroundColor: theme.colors.buttonBackground},
+            ]}
           />
           <View style={{marginBottom: spacing.xllll}}>
             {userData.map((item, index) => (
@@ -339,11 +384,10 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
   },
 
   bannerImage: {width: '100%', height: 300},
-  bannerImageGradient:{ width:'100%', height:'100%' },
+  bannerImageGradient: {width: '100%', height: '100%'},
   profileContainer: {
     marginHorizontal: spacing.xl,
     marginTop: spacing.xll,
@@ -353,12 +397,11 @@ const styles = StyleSheet.create({
   badgeContainer: {flexDirection: 'row'},
   badgeText: {
     ...typography.subtitle,
-    color: colors.textPrimary,
   },
   badgeStyle: {width: 20, height: 20, marginLeft: spacing.m},
   userNameStyle: {
     ...typography.title,
-    color: colors.textPrimary,
+
     textShadowColor: 'rgba(0, 0, 0, 1)',
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 4,
@@ -367,20 +410,20 @@ const styles = StyleSheet.create({
   },
   placeNameStyle: {
     ...typography.subText,
-    color: colors.textSecondary,
+
     marginTop: spacing.s,
   },
   profileImageStyle: {width: 96, height: 96},
   followTextStyle: {
     ...typography.buttonText,
-    color: colors.textPrimary,
+
     marginLeft: spacing.m,
   },
   followButton: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.buttonBackground,
+
     paddingHorizontal: spacing.xll,
     paddingVertical: spacing.l,
     width: 102,
@@ -393,13 +436,13 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 8,
   },
-  topEightTitle: {...typography.sectionTitle, color: '#fff'},
-  separator:{
+  topEightTitle: {...typography.sectionTitle},
+  separator: {
     width: '100%',
-    backgroundColor: '#323234',
+
     height: 2,
     marginVertical: spacing.xll,
-  }
+  },
 });
 
 export default ProfileScreen;
