@@ -5,9 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageSourcePropType,
-  FlatList,
   TextInput,
-  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import ProfileItem from '../components/ProfileItem';
 import {typography} from '../utils/typography';
@@ -56,7 +55,7 @@ const PeopleScreen = () => {
   const {theme, toggleTheme} = useTheme();
   const [selectedTab, setSelectedTab] = useState('Friends');
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="height">
+    <ScrollView contentContainerStyle={{flex: 1, flexGrow: 1}}>
       <View
         style={[styles.container, {backgroundColor: theme.colors.background}]}>
         <Text
@@ -111,17 +110,15 @@ const PeopleScreen = () => {
           ]}
         />
 
-        <FlatList
-          data={userData}
-          renderItem={({item, index}) => (
-            <ProfileItem
-              image={item.image}
-              title={item.title}
-              subTitle={item.subTitle}
-              userBadge={item.userBadge}
-            />
-          )}
-        />
+        {userData.map((item, index) => (
+          <ProfileItem
+            key={index}
+            image={item.image}
+            title={item.title}
+            subTitle={item.subTitle}
+            userBadge={item.userBadge}
+          />
+        ))}
 
         <View
           style={[
@@ -136,7 +133,7 @@ const PeopleScreen = () => {
           />
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -177,6 +174,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     flexDirection: 'row',
     alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
   },
 
   separator: {

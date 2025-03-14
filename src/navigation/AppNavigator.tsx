@@ -80,8 +80,9 @@ const AppNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {backgroundColor: theme.colors.background},
+        tabBarStyle: {backgroundColor: theme.colors.background,display:'none'},
         tabBarHideOnKeyboard: true,
+        
       }}
       tabBar={props => <MyTabBar {...props} />}>
       <Tab.Screen
